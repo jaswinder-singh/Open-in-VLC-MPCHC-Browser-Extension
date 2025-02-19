@@ -239,8 +239,8 @@ class RequestHandler(BaseHTTPRequestHandler):
                 query_params = parse_qs(self.path.split('?', 1)[-1])
                 decoded_params = {key: unquote(values[0]) for key, values in query_params.items()}
                 player = decoded_params.get("player", "")
-                video_url = decoded_params.get("video_url", "")
-                if not player or not video_url:
+                media_url = decoded_params.get("media_url", "")
+                if not player or not media_url:
                     self.send_response(400)
                     self.send_no_cache_headers()
                     self.end_headers()
@@ -266,7 +266,7 @@ class RequestHandler(BaseHTTPRequestHandler):
                     return
 
                 try:
-                    subprocess.Popen([player_path, video_url])
+                    subprocess.Popen([player_path, media_url])
                     self.send_response(200)
                     self.send_no_cache_headers()
                     self.end_headers()

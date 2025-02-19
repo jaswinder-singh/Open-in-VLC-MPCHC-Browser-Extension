@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', function() {
     chrome.storage.local.get(['serverPort'], function(result) {
       const port = result.serverPort || 26270;
       
-      fetch(`http://localhost:${port}/status`)
+      fetch(`http://localhost:${port}/status`, {cache: "no-store"})
         .then(response => {
           if (!response.ok) {
             throw new Error(`Windows helper app error ${response.status}`);
@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function() {
           showAlert(
             `<strong>Windows helper app is not running.</strong>
              <div style="margin:8px 0px">For this extension to work, you will need to install and run a small native windows application which is used to launch VLC / MPC-HC.</div>
-             <div style="margin:8px 0px">Please <a href="https://github.com/jaswinder-singh/Open-in-VLC-MPCHC-Browser-Extension/releases/latest" target="_Blank">download and run windows helper app</a>.</div>
+             <div style="margin:8px 0px">Please <a href="https://github.com/jaswinder-singh/Open-in-VLC-MPCHC-Browser-Extension/releases/latest" target="_Blank" title="Click here to download helper app">download and run windows helper app</a>.</div>
              <div>If helper app is already running on your computer, make sure port number entered below matches the port used in helper app settings.</div>`, 
             "danger"
           );
@@ -147,11 +147,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     alertContainer.appendChild(alertDiv);
 
-    // Auto dismiss after 180 seconds 
+    // Auto dismiss after 240 seconds 
     setTimeout(() => {
       if (alertDiv.parentNode) {
         alertDiv.remove();
       }
-    }, 180000);
+    }, 240000);
   }
 });

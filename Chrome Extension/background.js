@@ -35,16 +35,36 @@ chrome.runtime.onInstalled.addListener(() => {
     chrome.contextMenus.create({
       id: "viewInLocalMediaPlayer",
       title: "Open in " + playerDisplayName,
-      contexts: ["link"],
+      contexts: ["link", "audio", "video"],
       targetUrlPatterns: [
-        "*://*/*.mp4",
-        "*://*/*.webm",
-        "*://*/*.ogg",
-        "*://*/*.mkv",
+        // supported video formats
         "*://*/*.avi",
+        "*://*/*.mid",
+        "*://*/*.webm",
+        "*://*/*.mpg",
+        "*://*/*.mp2",
+        "*://*/*.mpeg",
+        "*://*/*.mpe",
+        "*://*/*.mpv",
+        "*://*/*.ogg",
+        "*://*/*.mp4",
+        "*://*/*.m4p",
+        "*://*/*.m4v",
+        "*://*/*.avi",
+        "*://*/*.wmv",
         "*://*/*.mov",
         "*://*/*.flv",
-        "*://*/*.wmv"
+        "*://*/*.ogv",
+        "*://*/*.3gp",
+        "*://*/*.mkv",
+
+        // supported audio formats
+        "*://*/*.aac",
+        "*://*/*.mp3",
+        "*://*/*.wav",
+        "*://*/*.weba",
+        "*://*/*.flac",
+        "*://*/*.m4a"
       ]
     });
   });
@@ -62,17 +82,17 @@ chrome.storage.onChanged.addListener((changes, area) => {
 // Handle clicks on the context menu.
 chrome.contextMenus.onClicked.addListener((info, tab) => {
   if (info.menuItemId === "viewInLocalMediaPlayer") {
-    const videoUrl = info.linkUrl;
+    const mediaURL = info.srcUrl || info.linkUrl;;
     
     chrome.storage.local.get(['defaultPlayer', 'serverPort'], (result) => {
       const defaultPlayer = result.defaultPlayer || "vlc";
 	  const playerDisplayName = getPlayerDisplayName(defaultPlayer);
       const port = result.serverPort || 26270;
-      const launchUrl = `http://localhost:${port}/launch?player=${defaultPlayer}&video_url=${encodeURIComponent(videoUrl)}`;
+      const launchUrl = `http://localhost:${port}/launch?player=${defaultPlayer}&media_url=${encodeURIComponent(mediaURL)}`;
       
       console.log(playerDisplayName + " launched with URL: " + launchUrl);
 
-      fetch(launchUrl)
+      fetch(launchUrl, {cache: "no-store"})
         .then(response => {
           if (!response.ok) {
             throw new Error(`Server error: ${response.status}`);
@@ -80,23 +100,25 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
           return response.text();
         })
         .then(text => {
-          console.log("Launch attempt successful: Enjoy your video!");
+          console.log("Launch attempt successful: Enjoy your media!");
           /*
           chrome.notifications.create({
             type: 'basic',
-            iconUrl: 'icon.png',
-            title: 'Enjoy your video!',
+            iconUrl: 'images/icon.png',
+            title: 'Enjoy your media!',
             message: 'Media player launched successfully.'
           });
           */
         })
         .catch(error => {
+          let errorMessage = error.message === "Failed to fetch" ? "Windows helper app is not connected." : error.message;
+
           console.log("Launch attempt failed: " + error);
           chrome.notifications.create({
             type: 'basic',
-            iconUrl: 'icon.png',
-            title: 'Error',
-            message: error.message
+            iconUrl: 'images/icon.png',
+            title: 'Media player launch failed!',
+            message: errorMessage
           });
         });
     });

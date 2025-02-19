@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Open in VLC / MPC-HC",
   "version": "1.2.1",
-  "description": "Adds a right-click menu option to play video URLs instantly in VLC or MPC-HC.",
+  "description": "Adds a right-click menu option to play audio & video URLs instantly in VLC or MPC-HC.",
   "action": {
     "default_popup": "popup.html",
     "default_icon": "images/icon.png"

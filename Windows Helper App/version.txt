@@ -16,7 +16,7 @@ VSVersionInfo(
                     '040904b0',
                     [
                         StringStruct('CompanyName', 'Jaswinder Singh'),
-                        StringStruct('FileDescription', 'Open in VLC / MPC-HC Windows Helper'),
+                        StringStruct('FileDescription', 'Browser Extension Helper App'),
                         StringStruct('FileVersion', '1.2.7.0'),
                         StringStruct('InternalName', 'Chrome2MediaPlayerWindowsHelper'),
                         StringStruct('LegalCopyright', 'Copyright (C) 2025 Jaswinder Singh, All rights reserved.'),
