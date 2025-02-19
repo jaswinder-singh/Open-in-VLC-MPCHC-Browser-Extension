@@ -138,7 +138,8 @@ button:hover {
     font-weight: bold;
     font-style: italic;
     text-decoration: none;
-    border-bottom: 1px dashed red;
+    color: #721c24;
+    border-bottom: 1px dashed #721c24;
 }
 
 .noselect, label {
