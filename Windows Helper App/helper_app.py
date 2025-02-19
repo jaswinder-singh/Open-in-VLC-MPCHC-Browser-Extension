@@ -47,7 +47,7 @@ if os.name == "nt":
 # -----------------------------------------------------------------------------
 # Constants & Global Variables
 # -----------------------------------------------------------------------------
-APP_VERSION = "1.2.7"
+APP_VERSION = "1.2.8"
 DEFAULT_PORT = 26270
 
 config = {}  # Global configuration dictionary.
