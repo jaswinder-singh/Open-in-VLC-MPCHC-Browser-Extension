@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function() {
           showAlert(
             `<strong>Windows helper app is not running.</strong>
              <div style="margin:8px 0px">For this extension to work, you will need to install and run a small native windows application which is used to launch VLC / MPC-HC.</div>
-             <div style="margin:8px 0px">Please <a href="#" target="_Blank">download and run windows helper app</a>.</div>
+             <div style="margin:8px 0px">Please <a href="https://github.com/jaswinder-singh/Open-in-VLC-MPCHC-Browser-Extension/releases/latest" target="_Blank">download and run windows helper app</a>.</div>
              <div>If helper app is already running on your computer, make sure port number entered below matches the port used in helper app settings.</div>`, 
             "danger"
           );
