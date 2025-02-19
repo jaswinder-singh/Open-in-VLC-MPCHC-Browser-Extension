@@ -1,0 +1,1 @@
+pip install pyinstaller customtkinter infi.systray psutil requests pywin32

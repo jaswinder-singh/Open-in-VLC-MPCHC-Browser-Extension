@@ -1,0 +1,50 @@
+<!--
+ * Open in VLC / MPC-HC Browser Extension
+ * Author: Jaswinder Singh
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License version 3
+ * as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+-->
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Open in VLC / MPC-HC Settings</title>
+        <link type="text/css" rel="stylesheet" href="popup.css" />
+    </head>
+    <body>
+        <h1>Settings</h1>
+        <h4>Open in VLC / MPC-HC Extension</h4>
+        <div id="alertContainer"></div>
+        <form id="settingsForm">
+            <div class="form-group">
+                <label class="setting-label">Choose your preferred media player:</label><br />
+                <p class="help-text">Right-click menu option will automatically launch all video URLs in the media player selected below.</p>
+                <input type="checkbox" id="mpcCheckbox" name="player" value="mpc" />
+                <label for="mpcCheckbox">Media Player Classic (MPC-HC)</label><br />
+                <input type="checkbox" id="vlcCheckbox" name="player" value="vlc" />
+                <label for="vlcCheckbox">VLC™ Media Player</label>
+            </div>
+            <div class="form-group">
+                <label for="portInput" class="setting-label noselect">Windows Helper App Port:</label><br />
+                <p class="help-text">Please enter the port number where your Windows helper app is running. Default port is 26270.</p>
+                <input type="text" id="portInput" value="26270" maxlength="5" />
+            </div>
+            <div class="form-group noselect">
+                <button type="button" id="saveButton">Save Settings</button>
+                <button type="button" id="statusButton" style="float: right; margin: 0;">Check connection</button>
+            </div>
+        </form>
+        <script type="text/javascript" src="popup.js"></script>
+    </body>
+</html>

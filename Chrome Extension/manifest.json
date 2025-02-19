@@ -1,0 +1,27 @@
+{
+  "manifest_version": 3,
+  "name": "Open in VLC / MPC-HC",
+  "version": "1.2.1",
+  "description": "Adds a right-click menu option to play video URLs instantly in VLC or MPC-HC.",
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "images/icon.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": [
+    "contextMenus",
+    "storage",
+    "notifications"
+  ],
+  "host_permissions": [
+    "http://localhost/*"
+  ],
+  "content_scripts": [],
+  "icons": {
+    "16": "images/icon.png",
+    "48": "images/icon.png",
+    "128": "images/icon.png"
+  }
+}
