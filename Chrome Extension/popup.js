@@ -16,25 +16,25 @@
  */
 
 document.addEventListener('DOMContentLoaded', function() {
-  const mpcCheckbox = document.getElementById('mpcCheckbox');
-  const vlcCheckbox = document.getElementById('vlcCheckbox');
-  const portInput = document.getElementById('portInput');
+  const mpc_checkbox = document.getElementById('mpc_checkbox');
+  const vlc_checkbox = document.getElementById('vlc_checkbox');
+  const app_connection_port = document.getElementById('app_connection_port');
   const saveButton = document.getElementById('saveButton');
   const statusButton = document.getElementById('statusButton');
   const alertContainer = document.getElementById('alertContainer');
 
   // Load settings from chrome.storage and then check server status
-  chrome.storage.local.get(['defaultPlayer', 'serverPort'], function(result) {
-    const defaultPlayer = result.defaultPlayer || "mpc";
+  chrome.storage.local.get(['defaultMediaPlayer', 'serverPort'], function(result) {
+    const defaultMediaPlayer = result.defaultMediaPlayer || "mpc";
     const serverPort = result.serverPort || 26270;
-    portInput.value = serverPort;
+    app_connection_port.value = serverPort;
     
-    if (defaultPlayer === "mpc") {
-      mpcCheckbox.checked = true;
-      vlcCheckbox.checked = false;
-    } else if (defaultPlayer === "vlc") {
-      mpcCheckbox.checked = false;
-      vlcCheckbox.checked = true;
+    if (defaultMediaPlayer === "mpc") {
+      mpc_checkbox.checked = true;
+      vlc_checkbox.checked = false;
+    } else if (defaultMediaPlayer === "vlc") {
+      mpc_checkbox.checked = false;
+      vlc_checkbox.checked = true;
     }
     
     // Immediately check server status once settings are loaded
@@ -42,25 +42,25 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   // Ensure only one checkbox is selected at a time
-  mpcCheckbox.addEventListener('change', function() {
-    if (mpcCheckbox.checked) {
-      vlcCheckbox.checked = false;
+  mpc_checkbox.addEventListener('change', function() {
+    if (mpc_checkbox.checked) {
+      vlc_checkbox.checked = false;
     }
   });
 
-  vlcCheckbox.addEventListener('change', function() {
-    if (vlcCheckbox.checked) {
-      mpcCheckbox.checked = false;
+  vlc_checkbox.addEventListener('change', function() {
+    if (vlc_checkbox.checked) {
+      mpc_checkbox.checked = false;
     }
   });
 
   // Save settings when Save button is clicked
   saveButton.addEventListener('click', function() {
-    const selectedPlayer = mpcCheckbox.checked ? "mpc" : (vlcCheckbox.checked ? "vlc" : "");
-    const port = parseInt(portInput.value, 10) || 26270;
+    const selectedPlayer = mpc_checkbox.checked ? "mpc" : (vlc_checkbox.checked ? "vlc" : "");
+    const port = parseInt(app_connection_port.value, 10) || 26270;
 
     chrome.storage.local.set({
-      defaultPlayer: selectedPlayer,
+      defaultMediaPlayer: selectedPlayer,
       serverPort: port
     }, function() {
       showAlert("<strong>Settings saved successfully!</strong>", "success");

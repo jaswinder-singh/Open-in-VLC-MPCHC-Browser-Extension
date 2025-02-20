@@ -16,7 +16,7 @@
  */
 
 // Helper function to map the stored value to a display name.
-function getPlayerDisplayName(player) {
+function getMediaPlayerDisplayName(player) {
   if (player === "vlc") {
     return "VLC";
   } else if (player === "mpc") {
@@ -29,9 +29,9 @@ function getPlayerDisplayName(player) {
 
 // Create the context menu when the extension is installed or updated.
 chrome.runtime.onInstalled.addListener(() => {
-  chrome.storage.local.get(['defaultPlayer'], (result) => {
-    const defaultPlayer = result.defaultPlayer || "vlc"; // Default value if none is set.
-    const playerDisplayName = getPlayerDisplayName(defaultPlayer);
+  chrome.storage.local.get(['defaultMediaPlayer'], (result) => {
+    const defaultMediaPlayer = result.defaultMediaPlayer || "vlc"; // Default value if none is set.
+    const playerDisplayName = getMediaPlayerDisplayName(defaultMediaPlayer);
     chrome.contextMenus.create({
       id: "viewInLocalMediaPlayer",
       title: "Open in " + playerDisplayName,
@@ -72,9 +72,9 @@ chrome.runtime.onInstalled.addListener(() => {
 
 // Listen for changes in the default player and update the context menu title accordingly.
 chrome.storage.onChanged.addListener((changes, area) => {
-  if (area === "local" && changes.defaultPlayer) {
-    const newPlayer = changes.defaultPlayer.newValue || "vlc";
-    const playerDisplayName = getPlayerDisplayName(newPlayer);
+  if (area === "local" && changes.defaultMediaPlayer) {
+    const newPlayer = changes.defaultMediaPlayer.newValue || "vlc";
+    const playerDisplayName = getMediaPlayerDisplayName(newPlayer);
     chrome.contextMenus.update("viewInLocalMediaPlayer", { title: "Open in " + playerDisplayName });
   }
 });
@@ -84,11 +84,11 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
   if (info.menuItemId === "viewInLocalMediaPlayer") {
     const mediaURL = info.srcUrl || info.linkUrl;;
     
-    chrome.storage.local.get(['defaultPlayer', 'serverPort'], (result) => {
-      const defaultPlayer = result.defaultPlayer || "vlc";
-	  const playerDisplayName = getPlayerDisplayName(defaultPlayer);
+    chrome.storage.local.get(['defaultMediaPlayer', 'serverPort'], (result) => {
+      const defaultMediaPlayer = result.defaultMediaPlayer || "vlc";
+	  const playerDisplayName = getMediaPlayerDisplayName(defaultMediaPlayer);
       const port = result.serverPort || 26270;
-      const launchUrl = `http://localhost:${port}/launch?player=${defaultPlayer}&media_url=${encodeURIComponent(mediaURL)}`;
+      const launchUrl = `http://localhost:${port}/launch?player=${defaultMediaPlayer}&media_url=${encodeURIComponent(mediaURL)}`;
       
       console.log(playerDisplayName + " launched with URL: " + launchUrl);
 

@@ -30,15 +30,15 @@
             <div class="form-group">
                 <label class="setting-label">Choose your preferred media player:</label><br />
                 <p class="help-text">Right-click menu option will automatically launch all audio & video URLs in the media player selected below.</p>
-                <input type="checkbox" id="mpcCheckbox" name="player" value="mpc" />
-                <label for="mpcCheckbox">Media Player Classic (MPC-HC)</label><br />
-                <input type="checkbox" id="vlcCheckbox" name="player" value="vlc" />
-                <label for="vlcCheckbox">VLC™ Media Player</label>
+                <input type="checkbox" id="mpc_checkbox" name="player" value="mpc" />
+                <label for="mpc_checkbox">Media Player Classic (MPC-HC)</label><br />
+                <input type="checkbox" id="vlc_checkbox" name="player" value="vlc" />
+                <label for="vlc_checkbox">VLC™ Media Player</label>
             </div>
             <div class="form-group">
-                <label for="portInput" class="setting-label noselect">Windows Helper App Port:</label><br />
+                <label for="app_connection_port" class="setting-label noselect">Windows Helper App Port:</label><br />
                 <p class="help-text">Please enter the port number where your Windows helper app is running. Default port is 26270.</p>
-                <input type="text" id="portInput" value="26270" maxlength="5" />
+                <input type="text" id="app_connection_port" value="26270" maxlength="5" required />
             </div>
             <div class="form-group noselect">
                 <button type="button" id="saveButton">Save Settings</button>
