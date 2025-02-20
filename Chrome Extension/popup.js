@@ -15,6 +15,12 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
+
+// Ensure browser API is available for all browsers
+if (typeof browser === "undefined") {
+  var browser = chrome;
+}
+
 document.addEventListener('DOMContentLoaded', function() {
   const mpc_checkbox = document.getElementById('mpc_checkbox');
   const vlc_checkbox = document.getElementById('vlc_checkbox');
@@ -23,8 +29,8 @@ document.addEventListener('DOMContentLoaded', function() {
   const statusButton = document.getElementById('statusButton');
   const alertContainer = document.getElementById('alertContainer');
 
-  // Load settings from chrome.storage and then check server status
-  chrome.storage.local.get(['defaultMediaPlayer', 'serverPort'], function(result) {
+  // Load settings from browser.storage and then check server status
+  browser.storage.local.get(['defaultMediaPlayer', 'serverPort'], function(result) {
     const defaultMediaPlayer = result.defaultMediaPlayer || "mpc";
     const serverPort = result.serverPort || 26270;
     app_connection_port.value = serverPort;
@@ -59,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const selectedPlayer = mpc_checkbox.checked ? "mpc" : (vlc_checkbox.checked ? "vlc" : "");
     const port = parseInt(app_connection_port.value, 10) || 26270;
 
-    chrome.storage.local.set({
+    browser.storage.local.set({
       defaultMediaPlayer: selectedPlayer,
       serverPort: port
     }, function() {
@@ -87,7 +93,7 @@ document.addEventListener('DOMContentLoaded', function() {
     placeholderAlert.innerHTML = `<span><strong>Checking windows helper app connection&hellip;</strong></span>`;
     alertContainer.appendChild(placeholderAlert);
 
-    chrome.storage.local.get(['serverPort'], function(result) {
+    browser.storage.local.get(['serverPort'], function(result) {
       const port = result.serverPort || 26270;
       
       fetch(`http://localhost:${port}/status`, {cache: "no-store"})

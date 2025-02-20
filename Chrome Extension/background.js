@@ -15,6 +15,12 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
+
+// Ensure browser API is available for all browsers
+if (typeof browser === "undefined") {
+  var browser = chrome;
+}
+
 // Helper function to map the stored value to a display name.
 function getMediaPlayerDisplayName(player) {
   if (player === "vlc") {
@@ -28,11 +34,11 @@ function getMediaPlayerDisplayName(player) {
 }
 
 // Create the context menu when the extension is installed or updated.
-chrome.runtime.onInstalled.addListener(() => {
-  chrome.storage.local.get(['defaultMediaPlayer'], (result) => {
+browser.runtime.onInstalled.addListener(() => {
+  browser.storage.local.get(['defaultMediaPlayer'], (result) => {
     const defaultMediaPlayer = result.defaultMediaPlayer || "vlc"; // Default value if none is set.
     const playerDisplayName = getMediaPlayerDisplayName(defaultMediaPlayer);
-    chrome.contextMenus.create({
+    browser.contextMenus.create({
       id: "viewInLocalMediaPlayer",
       title: "Open in " + playerDisplayName,
       contexts: ["link", "audio", "video"],
@@ -71,20 +77,20 @@ chrome.runtime.onInstalled.addListener(() => {
 });
 
 // Listen for changes in the default player and update the context menu title accordingly.
-chrome.storage.onChanged.addListener((changes, area) => {
+browser.storage.onChanged.addListener((changes, area) => {
   if (area === "local" && changes.defaultMediaPlayer) {
     const newPlayer = changes.defaultMediaPlayer.newValue || "vlc";
     const playerDisplayName = getMediaPlayerDisplayName(newPlayer);
-    chrome.contextMenus.update("viewInLocalMediaPlayer", { title: "Open in " + playerDisplayName });
+    browser.contextMenus.update("viewInLocalMediaPlayer", { title: "Open in " + playerDisplayName });
   }
 });
 
 // Handle clicks on the context menu.
-chrome.contextMenus.onClicked.addListener((info, tab) => {
+browser.contextMenus.onClicked.addListener((info, tab) => {
   if (info.menuItemId === "viewInLocalMediaPlayer") {
     const mediaURL = info.srcUrl || info.linkUrl;;
     
-    chrome.storage.local.get(['defaultMediaPlayer', 'serverPort'], (result) => {
+    browser.storage.local.get(['defaultMediaPlayer', 'serverPort'], (result) => {
       const defaultMediaPlayer = result.defaultMediaPlayer || "vlc";
 	  const playerDisplayName = getMediaPlayerDisplayName(defaultMediaPlayer);
       const port = result.serverPort || 26270;
@@ -102,7 +108,7 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
         .then(text => {
           console.log("Launch attempt successful: Enjoy your media!");
           /*
-          chrome.notifications.create({
+          browser.notifications.create({
             type: 'basic',
             iconUrl: 'images/icon.png',
             title: 'Enjoy your media!',
@@ -111,10 +117,10 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
           */
         })
         .catch(error => {
-          let errorMessage = error.message === "Failed to fetch" ? "Windows helper app is not connected." : error.message;
+          let errorMessage = error.message === "Failed to fetch" || "NetworkError when attempting to fetch resource." ? "Windows helper app is not connected." : error.message;
 
           console.log("Launch attempt failed: " + error);
-          chrome.notifications.create({
+          browser.notifications.create({
             type: 'basic',
             iconUrl: 'images/icon.png',
             title: 'Media player launch failed!',
