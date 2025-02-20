@@ -433,7 +433,7 @@ class SettingsWindow(tk.Tk):
 
         # Center the window on screen
         app_width = 715
-        app_height = 250
+        app_height = 245
         screen_width = self.winfo_screenwidth()
         screen_height = self.winfo_screenheight()
         screen_x_pos = (screen_width / 2) - (app_width / 2)
