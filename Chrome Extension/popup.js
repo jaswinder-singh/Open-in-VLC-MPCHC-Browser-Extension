@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Load settings from browser.storage and then check server status
   browser.storage.local.get(['defaultMediaPlayer', 'serverPort'], function(result) {
-    const defaultMediaPlayer = result.defaultMediaPlayer || "mpc";
+    const defaultMediaPlayer = result.defaultMediaPlayer || "vlc";
     const serverPort = result.serverPort || 26270;
     app_connection_port.value = serverPort;
     
