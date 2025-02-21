@@ -117,7 +117,7 @@ browser.contextMenus.onClicked.addListener((info, tab) => {
           */
         })
         .catch(error => {
-          let errorMessage = error.message === "Failed to fetch" || "NetworkError when attempting to fetch resource." ? "Windows helper app is not connected." : error.message;
+          let errorMessage = error.message === "Failed to fetch" || "NetworkError when attempting to fetch resource." ? "Windows helper app is not connected. Please open settings page of this extension to check/configure helper app connection." : error.message;
 
           console.log("Launch attempt failed: " + error);
           browser.notifications.create({
