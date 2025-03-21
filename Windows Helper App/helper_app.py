@@ -373,7 +373,7 @@ def is_port_in_use(port):
     """Return True if the specified port is already in use."""
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         try:
-            s.bind(("", port))
+            s.bind(("127.0.0.1", port))
             return False
         except OSError:
             return True
