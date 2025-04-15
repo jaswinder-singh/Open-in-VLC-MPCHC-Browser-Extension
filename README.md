@@ -5,4 +5,4 @@ Step 1: Download Extension
  - [Google Chrome Webstore (For Google Chrome and MS Edge)](https://chromewebstore.google.com/detail/open-in-vlc-mpc-hc/falodpifnbpmbaobncfolccmfenlafdo)  
  - [Firefox Addons](https://addons.mozilla.org/en-US/firefox/addon/open-in-vlc-mpc-hc/)  
 
-Step 2: [Download Helper App]([https://github.com/jaswinder-singh/Open-in-VLC-MPCHC-Browser-Extension/releases/latest](https://github.com/jaswinder-singh/Open-in-VLC-MPCHC-Browser-Extension/releases/download/v1.2.8/Open_In_VLC_MPC_Windows_Helper.exe))
+Step 2: [Download Helper App](https://github.com/jaswinder-singh/Open-in-VLC-MPCHC-Browser-Extension/releases/download/v1.2.8/Open_In_VLC_MPC_Windows_Helper.exe)
