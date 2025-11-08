@@ -35,7 +35,10 @@
   "browser_specific_settings": {
     "gecko": {
       "id": "open-in-media-player@wiselook.net",
-      "strict_min_version": "92.0"
+      "strict_min_version": "92.0",
+      "data_collection_permissions": {
+        "required": ["none"]
+      }
     }
   }
 }
