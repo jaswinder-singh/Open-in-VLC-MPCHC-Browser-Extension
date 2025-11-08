@@ -94,7 +94,7 @@ browser.contextMenus.onClicked.addListener((info, tab) => {
       const defaultMediaPlayer = result.defaultMediaPlayer || "vlc";
 	  const playerDisplayName = getMediaPlayerDisplayName(defaultMediaPlayer);
       const port = result.serverPort || 26270;
-      const launchUrl = `http://localhost:${port}/launch?player=${defaultMediaPlayer}&media_url=${encodeURIComponent(mediaURL)}`;
+      const launchUrl = `http://127.0.0.1:${port}/launch?player=${defaultMediaPlayer}&media_url=${encodeURIComponent(mediaURL)}`;
       
       console.log(playerDisplayName + " launched with URL: " + launchUrl);
 

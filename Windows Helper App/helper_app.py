@@ -47,7 +47,7 @@ if os.name == "nt":
 # -----------------------------------------------------------------------------
 # Constants & Global Variables
 # -----------------------------------------------------------------------------
-APP_VERSION = "1.2.8"
+APP_VERSION = "1.3.1"
 DEFAULT_PORT = 26270
 
 config = {}  # Global configuration dictionary.
@@ -157,6 +157,7 @@ def load_config():
     config.setdefault("vlc_path", "")
     config.setdefault("port", DEFAULT_PORT)
     config.setdefault("auto_start", True)
+    # Allow configuring extension IDs from config, so you don’t have to recompile helper
     return config
 
 
@@ -242,7 +243,7 @@ class RequestHandler(BaseHTTPRequestHandler):
                 media_url = decoded_params.get("media_url", "")
                 if not player or not media_url:
                     self.send_response(400)
-                    self.send_no_cache_headers()
+                    self.send_server_headers()
                     self.end_headers()
                     self.wfile.write(b'Launch request is missing required parameters')
                     return
@@ -253,14 +254,14 @@ class RequestHandler(BaseHTTPRequestHandler):
                     player_path = config.get("vlc_path")
                 else:
                     self.send_response(400)
-                    self.send_no_cache_headers()
+                    self.send_server_headers()
                     self.end_headers()
                     self.wfile.write(b'Invalid media player specified. Only Media Player Classic and VLC are supported.')
                     return
 
                 if not player_path:
                     self.send_response(400)
-                    self.send_no_cache_headers()
+                    self.send_server_headers()
                     self.end_headers()
                     self.wfile.write(b'Media player paths are not configured in windows helper app')
                     return
@@ -268,39 +269,44 @@ class RequestHandler(BaseHTTPRequestHandler):
                 try:
                     subprocess.Popen([player_path, media_url])
                     self.send_response(200)
-                    self.send_no_cache_headers()
+                    self.send_server_headers()
                     self.end_headers()
                     self.wfile.write(b'Media player launched')
                 except Exception as e:
                     logging.error("Error launching media player: %s", e)
                     self.send_response(500)
-                    self.send_no_cache_headers()
+                    self.send_server_headers()
                     self.end_headers()
                     self.wfile.write(str(e).encode())
 
             elif parsed_url.path == '/status':
                 response = {
-                    'status': 'running',
-                    'version': APP_VERSION
+                    'Name': 'Open in VLC / MPC-HC Windows Helper',
+                    'version': APP_VERSION,
+                    'status': 'running'
                 }
                 self.send_response(200)
                 self.send_header("Content-Type", "application/json")
-                self.send_no_cache_headers()
+                self.send_server_headers()
                 self.end_headers()
                 self.wfile.write(json.dumps(response).encode())
             else:
                 self.send_response(404)
                 self.end_headers()
-                self.wfile.write(b'Not Found')
+                self.wfile.write(b'<h1>Open in VLC / MPC-HC Windows Helper.<br><br>Invalid Request</h1>')
         except Exception as e:
             logging.error("Error handling request: %s", e)
             self.send_response(500)
-            self.send_no_cache_headers()
+            self.send_server_headers()
             self.end_headers()
             self.wfile.write(str(e).encode())
 
-    def send_no_cache_headers(self):
-        """Send headers to prevent caching."""
+    def send_server_headers(self):
+        """Send headers for CORS and to prevent caching."""
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Access-Control-Allow-Methods", "GET, OPTIONS")
+        self.send_header("Access-Control-Allow-Headers", "*")
+        self.send_header("Access-Control-Allow-Private-Network", "true")
         self.send_header("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0")
         self.send_header("Pragma", "no-cache")
         self.send_header("Expires", "0")
@@ -386,6 +392,7 @@ def show_error_message(title, message):
     temp_root.withdraw()
     messagebox.showerror(title, message)
     temp_root.destroy()
+
 
 # -----------------------------------------------------------------------------
 # Settings Window (Tkinter)
