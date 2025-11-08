@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Open in VLC / MPC‑HC Helper</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      background: #ffffff;
+      color: #222;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      text-align: center;
+    }
+    .wrap {
+      max-width: 380px;
+      padding: 24px;
+      opacity: 0;
+      transform: translateY(6px);
+      animation: fadeIn .6s ease-out .1s forwards;
+    }
+    img.logo {
+      width: 88px;
+      height: 88px;
+      margin-bottom: 20px;
+    }
+    h1 {
+      margin: 0 0 10px;
+      font-size: 24px;
+      font-weight: 600;
+    }
+    p {
+      margin: 0 0 22px;
+      color: #555;
+      line-height: 1.5;
+    }
+    a.btn {
+      display: block;
+      width: 260px;
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 10px 18px;
+      border-radius: 8px;
+      background: #4285F4;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      text-align: center;
+    }
+    a.btn:active {
+      opacity: 0.85;
+    }
+  @keyframes fadeIn { to { opacity: 1; transform: none; } }
+    @media (prefers-reduced-motion: reduce){ .wrap{ animation: none; opacity: 1; transform: none; } }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <img src="Images/logo.png" alt="Open in VLC / MPC‑HC Logo" class="logo" />
+    <h1>Open in VLC / MPC‑HC</h1>
+    <p>A tiny helper app that lets you open videos directly in VLC or MPC‑HC from your browser.</p>
+	<hr style="border:0; border-top:1px solid #eee; margin:32px auto; width:60%;">
+
+    <p style="margin-top:20px; font-weight:600;">Step 1: Install the browser extension</p>
+    <p style="margin:6px 0 14px; color:#666; font-size:14px;">Choose your browser to enable right‑click → "Open in VLC / MPC‑HC".</p>
+    <a class="btn" style="background:#EA4335; margin-top:10px;" href="https://addons.mozilla.org/en-US/firefox/addon/open-in-vlc-mpc-hc/">Firefox Extension</a>
+    <a class="btn" style="background:#4285F4; color:#FFF; margin-top:10px;" href="https://chromewebstore.google.com/detail/open-in-vlc-mpc-hc/falodpifnbpmbaobncfolccmfenlafdo">Chrome Extension</a>
+
+    <hr style="border:0; border-top:1px solid #eee; margin:32px auto; width:60%;">
+    <p style="margin-top:0; font-weight:600;">Step 2: Install the Windows Helper</p>
+    <p style="margin:6px 0 14px; color:#666; font-size:14px;">This small background app opens videos in your chosen player.</p>
+    <a class="btn" style="background:#4CAF50; margin-top:10px;" href="https://addons.mozilla.org/en-US/firefox/addon/open-in-vlc-mpc-hc/">Download Windows Helper App</a>
+    <small style="display:block; margin-top:6px; color:#777;">v1.3.1</small>
+  </div>
+</body>
+</html>
